@@ -64,3 +64,30 @@ def test_get_nonexistent_task():
 
     assert response.status_code == 404
     assert response.json() == {"detail": "Task not found"}
+
+
+def test_delete_task():
+    # Create a task
+    response = client.post(
+        "/tasks",
+        json={
+            "title": "Task to Delete",
+            "description": "This task will be deleted",
+        },
+    )
+
+    assert response.status_code == 200
+
+    task_id = response.json()["id"]
+
+    # Delete the task
+    response = client.delete(f"/tasks/{task_id}")
+
+    assert response.status_code == 200
+    assert response.json() == {"message": "Task deleted successfully"}
+
+    # Verify the task no longer exists
+    response = client.get(f"/tasks/{task_id}")
+
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Task not found"}
