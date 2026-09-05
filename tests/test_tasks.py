@@ -8,7 +8,7 @@ client = TestClient(app)
 def test_health_check():
     response = client.get("/health")
 
-    assert response.status_code == 200
+    assert response.status_code ==200
     assert response.json() == {"status": "healthy"}
 
 
@@ -21,7 +21,7 @@ def test_create_task():
         },
     )
 
-    assert response.status_code == 200
+    assert response.status_code ==200
 
     data = response.json()
 
@@ -34,7 +34,7 @@ def test_create_task():
 def test_get_tasks():
     response = client.get("/tasks")
 
-    assert response.status_code == 200
+    assert response.status_code ==200
     assert isinstance(response.json(), list)
 
 
@@ -51,7 +51,7 @@ def test_get_task():
 
     response = client.get(f"/tasks/{task_id}")
 
-    assert response.status_code == 200
+    assert response.status_code ==200
 
     data = response.json()
 
@@ -62,5 +62,5 @@ def test_get_task():
 def test_get_nonexistent_task():
     response = client.get("/tasks/999999")
 
-    assert response.status_code == 404
+    assert response.status_code ==404
     assert response.json() == {"detail": "Task not found"}
